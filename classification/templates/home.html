@@ -1,0 +1,67 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style type="text/css">
+        .text {
+            display: none;
+        }
+
+        #animal_image {
+            display: none;
+        }
+
+        #animal_image[src=""] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <h3 style="margin-left: 10px;">Artificial Intelligence 101 - Animal Classification</h3>
+    <u style="margin-left: 10px;">Team: Husanboy, Abdulaziz, Hasanboy, Abbosjon</u>
+    <hr>
+
+    <center>
+        <form action="{% url 'train' %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
+            <button type="submit" onclick="expand('one',0)" class="btn btn-primary">Train</button>
+        </form>
+        <p>
+            <div class="text" id="one">
+                Training in progress! Please wait...
+            </div>
+            {{ complete }}
+        </p>
+        
+        <form action="{% url 'classify' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <input align="center" type="file" class="buttons" id="File1" name="filePath">
+            </div>
+            <button type="submit" class="btn btn-success">Test</button>
+        </form>
+        
+        <p><h5>{{ name }}</h5></p>
+        <div id="x"></div>
+        <script>
+            var img = document.createElement("img");
+            img.src = "{{ image }}";
+            var src = document.getElementById("x");
+            src.appendChild(img);
+        </script>
+    </center>
+
+    <script type="text/javascript">
+        function expand(textId, index) {
+            var e = document.getElementById(textId);
+            var sign = document.getElementsByClassName("btn btn-primary")[index];
+            if (e.style.display === "block") {
+                e.style.display = "none";
+            } else {
+                e.style.display = "block";
+            }
+        }
+    </script>
+</body>
+
+</html>
